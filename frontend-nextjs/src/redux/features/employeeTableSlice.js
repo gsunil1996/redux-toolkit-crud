@@ -2,9 +2,10 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const baseURL = "https://redux-toolkit-crud-backend.vercel.app";
-
-// const baseURL = http://localhost:5000
+const baseURL =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:5000"
+    : "https://redux-toolkit-crud-backend.vercel.app";
 
 const initialState = {
   // get employee table data
