@@ -2,6 +2,10 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { toast } from "react-toastify";
 
+const baseURL = "https://redux-toolkit-crud-backend.vercel.app";
+
+// const baseURL = http://localhost:5000
+
 const initialState = {
   // get employee table data
   data: [],
@@ -45,7 +49,7 @@ export const getEmployeeTableData = createAsyncThunk(
     try {
       const { search, gender, status, sort, page } = payload;
       const { data } = await axios.get(
-        `http://localhost:5000/employeesTable?search=${search}&gender=${gender}&status=${status}&sort=${sort}&page=${page}`
+        `${baseURL}/employeesTable?search=${search}&gender=${gender}&status=${status}&sort=${sort}&page=${page}`
       );
 
       return data;
@@ -59,9 +63,7 @@ export const getEmployeeProfileData = createAsyncThunk(
   "employeeTable/getEmployeeProfileData",
   async ({ id }) => {
     try {
-      const { data } = await axios.get(
-        `http://localhost:5000/employeesTable/${id}`
-      );
+      const { data } = await axios.get(`${baseURL}/employeesTable/${id}`);
 
       return data;
     } catch (error) {
@@ -76,10 +78,7 @@ export const addEmployeeTableData = createAsyncThunk(
     try {
       const { data, employeeData } = payload;
 
-      const response = await axios.post(
-        `http://localhost:5000/addEmployee`,
-        data
-      );
+      const response = await axios.post(`${baseURL}/addEmployee`, data);
 
       thunkAPI.dispatch(getEmployeeTableData(employeeData));
 
@@ -97,7 +96,7 @@ export const editEmployeeTableData = createAsyncThunk(
       const { tableRowId, data, employeeData } = payload;
 
       const response = await axios.patch(
-        `http://localhost:5000/updateEmployeeDetails/${tableRowId}`,
+        `${baseURL}/updateEmployeeDetails/${tableRowId}`,
         data
       );
 
@@ -117,7 +116,7 @@ export const deleteEmployeeTableData = createAsyncThunk(
       const { tableRowId, employeeData } = payload;
 
       const response = await axios.delete(
-        `http://localhost:5000/deleteEmployee/${tableRowId}`
+        `${baseURL}/deleteEmployee/${tableRowId}`
       );
 
       thunkAPI.dispatch(getEmployeeTableData(employeeData));
