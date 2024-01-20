@@ -1,6 +1,6 @@
 const employees = require("../models/employeesSchema");
 
-const ITEM_PER_PAGE = 2;
+const ITEM_PER_PAGE = 100;
 
 const handleSuccess = (res, data) => {
   res.status(200).json({ success: true, data });
